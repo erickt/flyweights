@@ -384,7 +384,7 @@ impl<'de> Visitor<'de> for FlyByteStrVisitor {
     where
         A: serde::de::SeqAccess<'de>,
     {
-        let mut bytes = vec![];
+        let mut bytes = Vec::with_capacity(seq.size_hint().unwrap_or(0));
         while let Some(b) = seq.next_element::<u8>()? {
             bytes.push(b);
         }

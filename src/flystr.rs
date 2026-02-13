@@ -294,11 +294,17 @@ impl Visitor<'_> for FlyStrVisitor {
         Ok(v.into())
     }
 
-    fn visit_string<E>(self, v: String) -> Result<Self::Value, E>
+    fn visit_bytes<E>(self, v: &[u8]) -> Result<Self::Value, E>
     where
         E: serde::de::Error,
     {
-        Ok(v.into())
+        match str::from_utf8(v) {
+            Ok(s) => Ok(FlyStr::new(s)),
+            Err(_) => Err(serde::de::Error::invalid_value(
+                serde::de::Unexpected::Bytes(v),
+                &self,
+            )),
+        }
     }
 }
 
