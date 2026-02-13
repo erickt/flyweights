@@ -29,10 +29,12 @@
 #![warn(missing_docs, clippy::all)]
 
 mod flybytestr;
+mod flycstr;
 mod flystr;
 mod raw;
 
 pub use flybytestr::FlyByteStr;
+pub use flycstr::FlyCStr;
 pub use flystr::FlyStr;
 
 use foldhash::fast::RandomState;
